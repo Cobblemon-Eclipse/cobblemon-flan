@@ -33,20 +33,23 @@ class CobblemonFlanEventListener(
 
     private fun registerCatchProtection() {
         CobblemonEvents.THROWN_POKEBALL_HIT.subscribe { event ->
-            val config = CobblemonFlanConfig.config
-            if (!config.protections.preventCatching) return@subscribe
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventCatching) return@subscribe
 
-            val pokeBall = event.pokeBall
-            val thrower = pokeBall.owner
-            if (thrower !is ServerPlayerEntity) return@subscribe
+                val pokeBall = event.pokeBall
+                val thrower = pokeBall.owner as? ServerPlayerEntity ?: return@subscribe
 
-            val pokemon = event.pokemon
-            val targetPos = pokemon.blockPos
+                val pokemon = event.pokemon
+                val targetPos = pokemon.blockPos
 
-            if (!permissionChecker.canCatchPokemon(thrower, targetPos)) {
-                event.cancel()
-                sendMessage(thrower, config.messages.cannotCatch)
-                logger.debug("Blocked catch attempt by ${thrower.name.string} at $targetPos")
+                if (!permissionChecker.canCatchPokemon(thrower, targetPos)) {
+                    event.cancel()
+                    sendMessage(thrower, config.messages.cannotCatch)
+                    logger.debug("Blocked catch attempt by ${thrower.name.string} at $targetPos")
+                }
+            } catch (e: Exception) {
+                logger.warn("Error in catch protection: ${e.message}")
             }
         }
 
@@ -55,25 +58,26 @@ class CobblemonFlanEventListener(
 
     private fun registerBattleProtection() {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe { event ->
-            val config = CobblemonFlanConfig.config
-            if (!config.protections.preventBattles) return@subscribe
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventBattles) return@subscribe
 
-            // Check all participants
-            for (actor in event.battle.actors) {
-                val playerUuids = actor.getPlayerUUIDs()
-                for (uuid in playerUuids) {
-                    val player = event.battle.players.find { it.uuid == uuid }
-
-                    if (player is ServerPlayerEntity) {
-                        val pos = player.blockPos
-                        if (!permissionChecker.canBattlePokemon(player, pos)) {
+                // Iterate through all players in the battle directly
+                for (player in event.battle.players) {
+                    // Cast to ServerPlayerEntity (Yarn mapping)
+                    val serverPlayer = player as? ServerPlayerEntity
+                    if (serverPlayer != null) {
+                        val pos = serverPlayer.blockPos
+                        if (!permissionChecker.canBattlePokemon(serverPlayer, pos)) {
                             event.cancel()
-                            sendMessage(player, config.messages.cannotBattle)
-                            logger.debug("Blocked battle for ${player.name.string} at $pos")
+                            sendMessage(serverPlayer, config.messages.cannotBattle)
+                            logger.debug("Blocked battle for ${serverPlayer.name.string} at $pos")
                             return@subscribe
                         }
                     }
                 }
+            } catch (e: Exception) {
+                logger.warn("Error in battle protection: ${e.message}")
             }
         }
 
@@ -82,21 +86,26 @@ class CobblemonFlanEventListener(
 
     private fun registerSendOutProtection() {
         CobblemonEvents.POKEMON_SENT_PRE.subscribe { event ->
-            val config = CobblemonFlanConfig.config
-            if (!config.protections.preventSendOut) return@subscribe
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventSendOut) return@subscribe
 
-            // Get player from the pokemon's owner
-            val pokemon = event.pokemon
-            val playerUuid = pokemon.getOwnerUUID() ?: return@subscribe
-            val world = event.level
-            val server = world.server ?: return@subscribe
-            val player = server.playerManager.getPlayer(playerUuid) ?: return@subscribe
+                // Get player from the pokemon's owner
+                val pokemon = event.pokemon
+                val playerUuid = pokemon.getOwnerUUID() ?: return@subscribe
 
-            val pos = BlockPos.ofFloored(event.position)
-            if (!permissionChecker.canSendOutPokemon(player, pos)) {
-                event.cancel()
-                sendMessage(player, config.messages.cannotSendOut)
-                logger.debug("Blocked send out by ${player.name.string} at $pos")
+                // Get server from the level (works with both Mojmap and Yarn via remapping)
+                val server = event.level.server ?: return@subscribe
+                val player = server.playerManager.getPlayer(playerUuid) ?: return@subscribe
+
+                val pos = BlockPos.ofFloored(event.position)
+                if (!permissionChecker.canSendOutPokemon(player, pos)) {
+                    event.cancel()
+                    sendMessage(player, config.messages.cannotSendOut)
+                    logger.debug("Blocked send out by ${player.name.string} at $pos")
+                }
+            } catch (e: Exception) {
+                logger.warn("Error in send out protection: ${e.message}")
             }
         }
 
@@ -105,18 +114,21 @@ class CobblemonFlanEventListener(
 
     private fun registerRideProtection() {
         CobblemonEvents.RIDE_EVENT_PRE.subscribe { event ->
-            val config = CobblemonFlanConfig.config
-            if (!config.protections.preventRiding) return@subscribe
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventRiding) return@subscribe
 
-            // event.player is always a ServerPlayerEntity (mappings handle the conversion)
-            @Suppress("USELESS_IS_CHECK")
-            val player = event.player as? ServerPlayerEntity ?: return@subscribe
+                // Cast player to ServerPlayerEntity (Yarn mapping from Mojmap ServerPlayer)
+                val player = event.player as? ServerPlayerEntity ?: return@subscribe
+                val pos = player.blockPos
 
-            val pos = player.blockPos
-            if (!permissionChecker.canRidePokemon(player, pos)) {
-                event.cancel()
-                sendMessage(player, config.messages.cannotRide)
-                logger.debug("Blocked riding by ${player.name.string} at $pos")
+                if (!permissionChecker.canRidePokemon(player, pos)) {
+                    event.cancel()
+                    sendMessage(player, config.messages.cannotRide)
+                    logger.debug("Blocked riding by ${player.name.string} at $pos")
+                }
+            } catch (e: Exception) {
+                logger.warn("Error in ride protection: ${e.message}")
             }
         }
 
@@ -127,20 +139,24 @@ class CobblemonFlanEventListener(
         UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
             if (world.isClient) return@register ActionResult.PASS
 
-            val config = CobblemonFlanConfig.config
-            if (!config.protections.preventDisplayCaseInteraction) return@register ActionResult.PASS
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventDisplayCaseInteraction) return@register ActionResult.PASS
 
-            val serverPlayer = player as? ServerPlayerEntity ?: return@register ActionResult.PASS
-            val pos = hitResult.blockPos
-            val blockState = world.getBlockState(pos)
+                val serverPlayer = player as? ServerPlayerEntity ?: return@register ActionResult.PASS
+                val pos = hitResult.blockPos
+                val blockState = world.getBlockState(pos)
 
-            // Check if this is a Cobblemon display case
-            if (blockState.block == CobblemonBlocks.DISPLAY_CASE) {
-                if (!permissionChecker.canUseDisplayCase(serverPlayer, pos)) {
-                    sendMessage(serverPlayer, config.messages.cannotUseDisplayCase)
-                    logger.debug("Blocked display case interaction by ${serverPlayer.name.string} at $pos")
-                    return@register ActionResult.FAIL
+                // Check if this is a Cobblemon display case
+                if (blockState.block == CobblemonBlocks.DISPLAY_CASE) {
+                    if (!permissionChecker.canUseDisplayCase(serverPlayer, pos)) {
+                        sendMessage(serverPlayer, config.messages.cannotUseDisplayCase)
+                        logger.debug("Blocked display case interaction by ${serverPlayer.name.string} at $pos")
+                        return@register ActionResult.FAIL
+                    }
                 }
+            } catch (e: Exception) {
+                logger.warn("Error in display case protection: ${e.message}")
             }
 
             ActionResult.PASS

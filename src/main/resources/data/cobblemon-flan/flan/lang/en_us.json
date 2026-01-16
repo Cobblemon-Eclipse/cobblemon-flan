@@ -1,0 +1,14 @@
+{
+  "flan.permission.cobblemon-flan:pokemon_spawn": "Pokemon Spawn",
+  "flan.permission.cobblemon-flan:pokemon_spawn.desc": "Allow wild Pokemon to spawn in this claim",
+  "flan.permission.cobblemon-flan:pokemon_catch": "Pokemon Catch",
+  "flan.permission.cobblemon-flan:pokemon_catch.desc": "Allow catching Pokemon in this claim",
+  "flan.permission.cobblemon-flan:pokemon_battle": "Pokemon Battle",
+  "flan.permission.cobblemon-flan:pokemon_battle.desc": "Allow starting battles in this claim",
+  "flan.permission.cobblemon-flan:pokemon_sendout": "Pokemon Send Out",
+  "flan.permission.cobblemon-flan:pokemon_sendout.desc": "Allow sending out Pokemon in this claim",
+  "flan.permission.cobblemon-flan:pokemon_ride": "Pokemon Ride",
+  "flan.permission.cobblemon-flan:pokemon_ride.desc": "Allow riding Pokemon in this claim",
+  "flan.permission.cobblemon-flan:display_case": "Display Case",
+  "flan.permission.cobblemon-flan:display_case.desc": "Allow interacting with display cases in this claim"
+}
