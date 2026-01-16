@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:pig_spawn_egg"
+  },
+  "default_value": true,
+  "global": true,
+  "order": 200,
+  "required_mod": "cobblemon"
+}

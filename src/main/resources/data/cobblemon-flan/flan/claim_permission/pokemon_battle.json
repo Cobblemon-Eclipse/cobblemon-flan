@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:diamond_sword"
+  },
+  "default_value": false,
+  "global": false,
+  "order": 202,
+  "required_mod": "cobblemon"
+}

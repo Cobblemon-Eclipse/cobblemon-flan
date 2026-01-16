@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblemon-flan",
+  "version": "${version}",
+  "name": "Cobblemon Flan Integration",
+  "description": "Integrates Cobblemon with Flan claim protection system",
+  "authors": ["Eclipse"],
+  "contact": {
+    "homepage": "https://github.com/Cobblemon-Eclipse/cobblemon-flan"
+  },
+  "license": "MIT",
+  "icon": "assets/cobblemon-flan/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": ["com.eclipse.cobblemon.flan.CobblemonFlan"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.1",
+    "cobblemon": ">=1.6.0",
+    "flan": ">=1.12.0"
+  },
+  "suggests": {
+    "eclipse-core": "*"
+  }
+}

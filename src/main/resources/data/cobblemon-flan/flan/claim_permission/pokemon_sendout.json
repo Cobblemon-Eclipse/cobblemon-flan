@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:egg"
+  },
+  "default_value": false,
+  "global": false,
+  "order": 203,
+  "required_mod": "cobblemon"
+}

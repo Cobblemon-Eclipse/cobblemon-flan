@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:saddle"
+  },
+  "default_value": false,
+  "global": false,
+  "order": 204,
+  "required_mod": "cobblemon"
+}

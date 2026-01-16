@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:ender_pearl"
+  },
+  "default_value": false,
+  "global": false,
+  "order": 201,
+  "required_mod": "cobblemon"
+}

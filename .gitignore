@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Minecraft
+run/
+logs/
+
+# Loom
+.fabric/
+remappedSrc/
+
+# Heap dumps
+*.hprof
