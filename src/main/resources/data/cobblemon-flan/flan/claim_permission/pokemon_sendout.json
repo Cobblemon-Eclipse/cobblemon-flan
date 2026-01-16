@@ -1,6 +1,6 @@
 {
   "gui_item": {
-    "id": "minecraft:egg"
+    "id": "cobblemon:great_ball"
   },
   "default_value": false,
   "global": false,

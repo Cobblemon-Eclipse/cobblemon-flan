@@ -1,6 +1,6 @@
 {
   "gui_item": {
-    "id": "minecraft:saddle"
+    "id": "cobblemon:pokedex_red"
   },
   "default_value": false,
   "global": false,

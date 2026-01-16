@@ -1,6 +1,6 @@
 {
   "gui_item": {
-    "id": "minecraft:pig_spawn_egg"
+    "id": "cobblemon:rare_candy"
   },
   "default_value": true,
   "global": true,

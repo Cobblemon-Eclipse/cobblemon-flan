@@ -1,6 +1,6 @@
 {
   "gui_item": {
-    "id": "minecraft:ender_pearl"
+    "id": "cobblemon:poke_ball"
   },
   "default_value": false,
   "global": false,

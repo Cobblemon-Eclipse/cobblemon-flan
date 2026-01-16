@@ -1,6 +1,6 @@
 {
   "gui_item": {
-    "id": "minecraft:glass"
+    "id": "cobblemon:display_case"
   },
   "default_value": false,
   "global": false,
