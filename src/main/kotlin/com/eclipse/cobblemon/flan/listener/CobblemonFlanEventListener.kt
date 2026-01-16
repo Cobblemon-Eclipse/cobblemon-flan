@@ -1,11 +1,14 @@
 package com.eclipse.cobblemon.flan.listener
 
+import com.cobblemon.mod.common.CobblemonBlocks
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.eclipse.cobblemon.flan.config.CobblemonFlanConfig
 import com.eclipse.cobblemon.flan.di.CobblemonFlanLoggerService
 import com.eclipse.cobblemon.flan.permission.FlanPermissionChecker
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
+import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 
 /**
@@ -23,6 +26,7 @@ class CobblemonFlanEventListener(
         registerBattleProtection()
         registerSendOutProtection()
         registerRideProtection()
+        registerDisplayCaseProtection()
 
         logger.info("Cobblemon Flan event listeners registered!")
     }
@@ -117,6 +121,32 @@ class CobblemonFlanEventListener(
         }
 
         logger.debug("Ride protection registered")
+    }
+
+    private fun registerDisplayCaseProtection() {
+        UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
+            if (world.isClient) return@register ActionResult.PASS
+
+            val config = CobblemonFlanConfig.config
+            if (!config.protections.preventDisplayCaseInteraction) return@register ActionResult.PASS
+
+            val serverPlayer = player as? ServerPlayerEntity ?: return@register ActionResult.PASS
+            val pos = hitResult.blockPos
+            val blockState = world.getBlockState(pos)
+
+            // Check if this is a Cobblemon display case
+            if (blockState.block == CobblemonBlocks.DISPLAY_CASE) {
+                if (!permissionChecker.canUseDisplayCase(serverPlayer, pos)) {
+                    sendMessage(serverPlayer, config.messages.cannotUseDisplayCase)
+                    logger.debug("Blocked display case interaction by ${serverPlayer.name.string} at $pos")
+                    return@register ActionResult.FAIL
+                }
+            }
+
+            ActionResult.PASS
+        }
+
+        logger.debug("Display case protection registered")
     }
 
     private fun sendMessage(player: ServerPlayerEntity, message: String) {

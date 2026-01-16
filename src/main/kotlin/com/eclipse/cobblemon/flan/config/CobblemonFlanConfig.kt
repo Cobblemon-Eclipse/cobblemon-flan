@@ -64,6 +64,9 @@ data class ProtectionSettings(
     // Pokemon riding protection
     val preventRiding: Boolean = true,
 
+    // Display case protection (prevent stealing items)
+    val preventDisplayCaseInteraction: Boolean = true,
+
     // Allow claim owners to always bypass
     val ownerBypass: Boolean = true
 )
@@ -73,5 +76,6 @@ data class MessageSettings(
     val cannotCatch: String = "<yellow>You cannot catch Pokemon in this claim!</yellow>",
     val cannotBattle: String = "<yellow>You cannot battle Pokemon in this claim!</yellow>",
     val cannotSendOut: String = "<yellow>You cannot send out Pokemon in this claim!</yellow>",
-    val cannotRide: String = "<yellow>You cannot ride Pokemon in this claim!</yellow>"
+    val cannotRide: String = "<yellow>You cannot ride Pokemon in this claim!</yellow>",
+    val cannotUseDisplayCase: String = "<yellow>You cannot interact with display cases in this claim!</yellow>"
 )

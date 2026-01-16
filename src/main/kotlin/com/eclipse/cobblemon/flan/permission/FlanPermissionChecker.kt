@@ -19,6 +19,7 @@ class FlanPermissionChecker(
         val POKEMON_BATTLE = Identifier.of("cobblemon-flan", "pokemon_battle")
         val POKEMON_SENDOUT = Identifier.of("cobblemon-flan", "pokemon_sendout")
         val POKEMON_RIDE = Identifier.of("cobblemon-flan", "pokemon_ride")
+        val DISPLAY_CASE = Identifier.of("cobblemon-flan", "display_case")
     }
 
     /**
@@ -70,5 +71,12 @@ class FlanPermissionChecker(
      */
     fun canRidePokemon(player: ServerPlayerEntity, pos: BlockPos): Boolean {
         return canInteract(player, pos, POKEMON_RIDE)
+    }
+
+    /**
+     * Check if a player can interact with display cases at a position
+     */
+    fun canUseDisplayCase(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        return canInteract(player, pos, DISPLAY_CASE)
     }
 }

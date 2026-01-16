@@ -13,6 +13,7 @@ This mod adds the following Flan permissions for Cobblemon:
 | `cobblemon-flan:pokemon_battle` | Controls starting battles in claims | Denied |
 | `cobblemon-flan:pokemon_sendout` | Controls sending out Pokemon in claims | Denied |
 | `cobblemon-flan:pokemon_ride` | Controls riding Pokemon in claims | Denied |
+| `cobblemon-flan:display_case` | Controls interacting with display cases | Denied |
 
 Claim owners can configure these permissions per-claim through Flan's permission GUI.
 
@@ -43,6 +44,7 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
     "preventBattles": true,
     "preventSendOut": true,
     "preventRiding": true,
+    "preventDisplayCaseInteraction": true,
     "ownerBypass": true
   },
   "messages": {
@@ -50,7 +52,8 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
     "cannotCatch": "<yellow>You cannot catch Pokemon in this claim!</yellow>",
     "cannotBattle": "<yellow>You cannot battle Pokemon in this claim!</yellow>",
     "cannotSendOut": "<yellow>You cannot send out Pokemon in this claim!</yellow>",
-    "cannotRide": "<yellow>You cannot ride Pokemon in this claim!</yellow>"
+    "cannotRide": "<yellow>You cannot ride Pokemon in this claim!</yellow>",
+    "cannotUseDisplayCase": "<yellow>You cannot interact with display cases in this claim!</yellow>"
   }
 }
 ```
@@ -64,6 +67,7 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
 | `preventBattles` | Prevent players from starting battles in claims |
 | `preventSendOut` | Prevent players from sending out their Pokemon in claims |
 | `preventRiding` | Prevent players from riding Pokemon in claims |
+| `preventDisplayCaseInteraction` | Prevent players from interacting with display cases (stealing items) |
 | `ownerBypass` | Allow claim owners to bypass all restrictions |
 
 ## How It Works
@@ -84,6 +88,7 @@ After installing this mod, you'll see new permission options in Flan's claim GUI
 - **Pokemon Battle** (diamond sword icon) - Per-player permission for battles
 - **Pokemon Send Out** (egg icon) - Per-player permission for sending out Pokemon
 - **Pokemon Ride** (saddle icon) - Per-player permission for riding
+- **Display Case** (glass icon) - Per-player permission for interacting with display cases
 
 ## Building from Source
 

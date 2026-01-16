@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:glass"
+  },
+  "default_value": false,
+  "global": false,
+  "order": 205,
+  "required_mod": "cobblemon"
+}
