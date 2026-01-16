@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.eclipse.cobblemon.flan.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "RidingStateHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
