@@ -2,7 +2,7 @@
   "gui_item": {
     "id": "cobblemon:great_ball"
   },
-  "default_value": false,
+  "default_value": true,
   "global": false,
   "order": 203,
   "required_mod": "cobblemon"

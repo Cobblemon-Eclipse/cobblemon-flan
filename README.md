@@ -9,9 +9,9 @@ This mod adds the following Flan permissions for Cobblemon:
 | Permission | Description | Default |
 |------------|-------------|---------|
 | `cobblemon-flan:pokemon_spawn` | Controls wild Pokemon spawning in claims | Allowed (global) |
-| `cobblemon-flan:pokemon_catch` | Controls catching Pokemon in claims | Denied |
+| `cobblemon-flan:pokemon_catch` | Controls catching Pokemon in claims | Allowed |
 | `cobblemon-flan:pokemon_battle` | Controls starting battles in claims | Denied |
-| `cobblemon-flan:pokemon_sendout` | Controls sending out Pokemon in claims | Denied |
+| `cobblemon-flan:pokemon_sendout` | Controls sending out Pokemon in claims | Allowed |
 | `cobblemon-flan:pokemon_ride` | Controls riding Pokemon in claims | Denied |
 | `cobblemon-flan:display_case` | Controls interacting with display cases | Denied |
 

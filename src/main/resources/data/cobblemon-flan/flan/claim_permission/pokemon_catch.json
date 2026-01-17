@@ -2,7 +2,7 @@
   "gui_item": {
     "id": "cobblemon:poke_ball"
   },
-  "default_value": false,
+  "default_value": true,
   "global": false,
   "order": 201,
   "required_mod": "cobblemon"
