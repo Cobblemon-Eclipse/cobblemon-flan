@@ -22,9 +22,9 @@ Claim owners can configure these permissions per-claim through Flan's permission
 - Minecraft 1.21.1
 - Fabric Loader 0.16.5+
 - Fabric API
-- [Cobblemon](https://modrinth.com/mod/cobblemon) 1.6.0+
+- [Cobblemon](https://modrinth.com/mod/cobblemon) 1.7.3+
 - [Flan](https://modrinth.com/mod/flan) 1.12.0+
-- [eclipse-core](https://github.com/Cobblemon-Eclipse/eclipse-core) 1.11.0+
+- [eclipse-core](https://github.com/Cobblemon-Eclipse/eclipse-core) 1.17.0+
 
 ## Installation
 
