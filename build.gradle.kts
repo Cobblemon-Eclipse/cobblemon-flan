@@ -5,7 +5,7 @@ plugins {
 eclipseMod {
     modId.set("cobblemon-flan")
     modName.set("Cobblemon Flan Integration")
-    modVersion.set("1.1.5")
+    modVersion.set("1.1.6")
     mavenGroup.set("com.eclipse")
 
     useEclipseCore.set(false)

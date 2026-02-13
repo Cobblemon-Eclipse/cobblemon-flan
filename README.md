@@ -89,6 +89,16 @@ After installing this mod, you'll see new permission options in Flan's claim GUI
 - **Pokemon Ride** (saddle icon) - Per-player permission for riding
 - **Display Case** (glass icon) - Per-player permission for interacting with display cases
 
+## Changelog
+
+### v1.1.6
+- Removed eclipse-core dependency - mod is now fully standalone
+- Works with or without eclipse-core installed on the server
+
+### v1.1.5
+- Updated to Cobblemon 1.7.3+
+- Updated eclipse-gradle-plugin to 1.0.16
+
 ## Building from Source
 
 ```bash
