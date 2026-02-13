@@ -8,7 +8,7 @@ eclipseMod {
     modVersion.set("1.1.5")
     mavenGroup.set("com.eclipse")
 
-    useEclipseCore.set(true)
+    useEclipseCore.set(false)
     useKoin.set(true)
     usePermissionsApi.set(true)
     useCobblemon.set(true)

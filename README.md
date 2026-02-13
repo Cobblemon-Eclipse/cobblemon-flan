@@ -24,7 +24,6 @@ Claim owners can configure these permissions per-claim through Flan's permission
 - Fabric API
 - [Cobblemon](https://modrinth.com/mod/cobblemon) 1.7.3+
 - [Flan](https://modrinth.com/mod/flan) 1.12.0+
-- [eclipse-core](https://github.com/Cobblemon-Eclipse/eclipse-core) 1.17.0+
 
 ## Installation
 

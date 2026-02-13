@@ -2,6 +2,7 @@ package com.eclipse.cobblemon.flan.listener
 
 import com.cobblemon.mod.common.CobblemonBlocks
 import com.cobblemon.mod.common.api.events.CobblemonEvents
+import com.eclipse.cobblemon.flan.api.FlanBypass
 import com.eclipse.cobblemon.flan.config.CobblemonFlanConfig
 import com.eclipse.cobblemon.flan.di.CobblemonFlanLoggerService
 import com.eclipse.cobblemon.flan.permission.FlanPermissionChecker
@@ -39,6 +40,7 @@ class CobblemonFlanEventListener(
 
                 val pokeBall = event.pokeBall
                 val thrower = pokeBall.owner as? ServerPlayerEntity ?: return@subscribe
+                if (FlanBypass.isBypassed(thrower.uuid)) return@subscribe
 
                 val pokemon = event.pokemon
                 val targetPos = pokemon.blockPos
@@ -67,6 +69,7 @@ class CobblemonFlanEventListener(
                     // Cast to ServerPlayerEntity (Yarn mapping)
                     val serverPlayer = player as? ServerPlayerEntity
                     if (serverPlayer != null) {
+                        if (FlanBypass.isBypassed(serverPlayer.uuid)) continue
                         val pos = serverPlayer.blockPos
                         if (!permissionChecker.canBattlePokemon(serverPlayer, pos)) {
                             event.cancel()
@@ -93,6 +96,7 @@ class CobblemonFlanEventListener(
                 // Get player from the pokemon's owner
                 val pokemon = event.pokemon
                 val playerUuid = pokemon.getOwnerUUID() ?: return@subscribe
+                if (FlanBypass.isBypassed(playerUuid)) return@subscribe
 
                 // Get server from the level (works with both Mojmap and Yarn via remapping)
                 val server = event.level.server ?: return@subscribe
@@ -120,6 +124,7 @@ class CobblemonFlanEventListener(
 
                 // Cast player to ServerPlayerEntity (Yarn mapping from Mojmap ServerPlayer)
                 val player = event.player as? ServerPlayerEntity ?: return@subscribe
+                if (FlanBypass.isBypassed(player.uuid)) return@subscribe
                 val pos = player.blockPos
 
                 if (!permissionChecker.canRidePokemon(player, pos)) {
@@ -144,6 +149,7 @@ class CobblemonFlanEventListener(
                 if (!config.protections.preventDisplayCaseInteraction) return@register ActionResult.PASS
 
                 val serverPlayer = player as? ServerPlayerEntity ?: return@register ActionResult.PASS
+                if (FlanBypass.isBypassed(serverPlayer.uuid)) return@register ActionResult.PASS
                 val pos = hitResult.blockPos
                 val blockState = world.getBlockState(pos)
 

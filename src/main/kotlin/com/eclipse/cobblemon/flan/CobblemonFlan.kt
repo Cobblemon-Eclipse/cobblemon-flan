@@ -9,6 +9,8 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.startKoin
 import org.koin.core.context.loadKoinModules
 
 object CobblemonFlan : ModInitializer, KoinComponent {
@@ -18,7 +20,15 @@ object CobblemonFlan : ModInitializer, KoinComponent {
     private val eventListener: CobblemonFlanEventListener by inject()
 
     override fun onInitialize() {
-        loadKoinModules(CobblemonFlanModule.module)
+        // If Koin is already started (e.g. by eclipse-core), add our module
+        // Otherwise start Koin ourselves for standalone operation
+        if (GlobalContext.getOrNull() != null) {
+            loadKoinModules(CobblemonFlanModule.module)
+        } else {
+            startKoin {
+                modules(CobblemonFlanModule.module)
+            }
+        }
 
         logger.info("Initializing Cobblemon Flan Integration...")
 
