@@ -2,23 +2,23 @@ package com.eclipse.cobblemon.flan.listener
 
 import com.cobblemon.mod.common.CobblemonBlocks
 import com.cobblemon.mod.common.api.events.CobblemonEvents
+import com.eclipse.cobblemon.flan.CobblemonFlan
 import com.eclipse.cobblemon.flan.api.FlanBypass
 import com.eclipse.cobblemon.flan.config.CobblemonFlanConfig
-import com.eclipse.cobblemon.flan.di.CobblemonFlanLoggerService
-import com.eclipse.cobblemon.flan.permission.FlanPermissionChecker
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
+import org.slf4j.LoggerFactory
 
 /**
  * Listens to Cobblemon events and checks Flan permissions
  */
-class CobblemonFlanEventListener(
-    private val logger: CobblemonFlanLoggerService,
-    private val permissionChecker: FlanPermissionChecker
-) {
+class CobblemonFlanEventListener {
+
+    private val logger = LoggerFactory.getLogger("CobblemonFlan")
+    private val permissionChecker get() = CobblemonFlan.permissionChecker
 
     fun register() {
         logger.info("Registering Cobblemon event listeners for Flan protection...")
@@ -66,7 +66,6 @@ class CobblemonFlanEventListener(
 
                 // Iterate through all players in the battle directly
                 for (player in event.battle.players) {
-                    // Cast to ServerPlayerEntity (Yarn mapping)
                     val serverPlayer = player as? ServerPlayerEntity
                     if (serverPlayer != null) {
                         if (FlanBypass.isBypassed(serverPlayer.uuid)) continue
@@ -93,12 +92,10 @@ class CobblemonFlanEventListener(
                 val config = CobblemonFlanConfig.config
                 if (!config.protections.preventSendOut) return@subscribe
 
-                // Get player from the pokemon's owner
                 val pokemon = event.pokemon
                 val playerUuid = pokemon.getOwnerUUID() ?: return@subscribe
                 if (FlanBypass.isBypassed(playerUuid)) return@subscribe
 
-                // Get server from the level (works with both Mojmap and Yarn via remapping)
                 val server = event.level.server ?: return@subscribe
                 val player = server.playerManager.getPlayer(playerUuid) ?: return@subscribe
 
@@ -122,7 +119,6 @@ class CobblemonFlanEventListener(
                 val config = CobblemonFlanConfig.config
                 if (!config.protections.preventRiding) return@subscribe
 
-                // Cast player to ServerPlayerEntity (Yarn mapping from Mojmap ServerPlayer)
                 val player = event.player as? ServerPlayerEntity ?: return@subscribe
                 if (FlanBypass.isBypassed(player.uuid)) return@subscribe
                 val pos = player.blockPos
