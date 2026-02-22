@@ -25,3 +25,9 @@ remappedSrc/
 # Heap dumps
 *.hprof
 *.zip
+
+# Claude files - NEVER commit these
+CLAUDE.md
+CLAUDE_MEMORY.md
+.claude/
+tmpclaude-*
