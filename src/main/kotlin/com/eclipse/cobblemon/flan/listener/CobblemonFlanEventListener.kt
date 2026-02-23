@@ -23,6 +23,7 @@ class CobblemonFlanEventListener {
     fun register() {
         logger.info("Registering Cobblemon event listeners for Flan protection...")
 
+        registerSpawnProtection()
         registerCatchProtection()
         registerBattleProtection()
         registerSendOutProtection()
@@ -30,6 +31,29 @@ class CobblemonFlanEventListener {
         registerDisplayCaseProtection()
 
         logger.info("Cobblemon Flan event listeners registered!")
+    }
+
+    private fun registerSpawnProtection() {
+        CobblemonEvents.ENTITY_SPAWN.subscribe { event ->
+            try {
+                val config = CobblemonFlanConfig.config
+                if (!config.protections.preventWildSpawns) return@subscribe
+
+                val spawnPos = event.spawnablePosition.position
+                val causeEntity = event.spawnablePosition.cause.entity
+                val player = causeEntity as? ServerPlayerEntity ?: return@subscribe
+                if (FlanBypass.isBypassed(player.uuid)) return@subscribe
+
+                if (!permissionChecker.canPokemonSpawn(player, spawnPos)) {
+                    event.cancel()
+                    logger.debug("Blocked wild spawn at $spawnPos in claim near ${player.name.string}")
+                }
+            } catch (e: Exception) {
+                logger.warn("Error in spawn protection: ${e.message}")
+            }
+        }
+
+        logger.debug("Spawn protection registered")
     }
 
     private fun registerCatchProtection() {
