@@ -50,6 +50,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in spawn protection: ${e.message}")
+                event.cancel() // Fail closed - deny spawn on error
             }
         }
 
@@ -76,6 +77,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in catch protection: ${e.message}")
+                event.cancel() // Fail closed - deny catch on error
             }
         }
 
@@ -104,6 +106,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in battle protection: ${e.message}")
+                event.cancel() // Fail closed - deny battle on error
             }
         }
 
@@ -131,6 +134,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in send out protection: ${e.message}")
+                event.cancel() // Fail closed - deny send out on error
             }
         }
 
@@ -154,6 +158,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in ride protection: ${e.message}")
+                event.cancel() // Fail closed - deny ride on error
             }
         }
 
@@ -183,6 +188,7 @@ class CobblemonFlanEventListener {
                 }
             } catch (e: Exception) {
                 logger.warn("Error in display case protection: ${e.message}")
+                return@register ActionResult.FAIL // Fail closed - deny interaction on error
             }
 
             ActionResult.PASS

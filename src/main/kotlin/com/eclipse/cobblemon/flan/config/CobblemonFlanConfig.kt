@@ -65,10 +65,7 @@ data class ProtectionSettings(
     val preventRiding: Boolean = true,
 
     // Display case protection (prevent stealing items)
-    val preventDisplayCaseInteraction: Boolean = true,
-
-    // Allow claim owners to always bypass
-    val ownerBypass: Boolean = true
+    val preventDisplayCaseInteraction: Boolean = true
 )
 
 data class MessageSettings(

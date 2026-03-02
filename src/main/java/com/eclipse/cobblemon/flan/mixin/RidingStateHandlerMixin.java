@@ -5,6 +5,8 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.net.messages.server.pokemon.update.ServerboundUpdateRidingStatePacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -15,6 +17,8 @@ import org.spongepowered.asm.mixin.Overwrite;
  */
 @Mixin(targets = "com.cobblemon.mod.common.net.serverhandling.pokemon.update.ServerboundUpdateRidingStateHandler", remap = false)
 public abstract class RidingStateHandlerMixin implements ServerNetworkPacketHandler<ServerboundUpdateRidingStatePacket> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("CobblemonFlan");
 
     /**
      * @author cobblemon-flan
@@ -46,7 +50,7 @@ public abstract class RidingStateHandlerMixin implements ServerNetworkPacketHand
         } catch (IndexOutOfBoundsException e) {
             // Silently ignore malformed packet - this is a Cobblemon bug
         } catch (Exception e) {
-            // Silently ignore other errors to prevent spam
+            LOGGER.warn("Unexpected error in riding state handler: {}", e.getMessage());
         }
     }
 }

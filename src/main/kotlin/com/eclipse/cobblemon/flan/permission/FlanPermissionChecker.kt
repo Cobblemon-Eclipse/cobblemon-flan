@@ -24,14 +24,15 @@ class FlanPermissionChecker {
     }
 
     /**
-     * Check if a player can perform an action at a position
+     * Check if a player can perform an action at a position.
+     * Fails closed: returns false (deny) on any exception.
      */
     fun canInteract(player: ServerPlayerEntity, pos: BlockPos, permission: Identifier): Boolean {
         return try {
             ClaimHandler.canInteract(player, pos, permission)
         } catch (e: Exception) {
-            logger.warn("Error checking Flan permission: ${e.message}")
-            true // Default to allowing if error
+            logger.warn("Error checking Flan permission for ${player.name.string} at $pos ($permission): ${e.message}")
+            false // Fail closed - deny action when protection check errors
         }
     }
 
