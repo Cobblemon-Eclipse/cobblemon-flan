@@ -1,5 +1,5 @@
 plugins {
-    id("com.eclipse.mod") version "1.0.17"
+    id("com.eclipse.mod") version "1.0.19"
 }
 
 eclipseMod {
