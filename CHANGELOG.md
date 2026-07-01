@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/compare/cobblemon-flan-v1.4.0...cobblemon-flan-v1.4.1) (2026-07-01)
+
+
+### Bug Fixes
+
+* protect display cases by default (display_case default_value -&gt; false) ([#7](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/issues/7)) ([07d887c](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/commit/07d887c99b7faded1b64ac88ead9b2ea9a4ecf8e))
+
 ## [1.4.0](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/compare/cobblemon-flan-v1.3.0...cobblemon-flan-v1.4.0) (2026-07-01)
 
 

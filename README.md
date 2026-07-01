@@ -13,7 +13,7 @@ This mod adds the following Flan permissions for Cobblemon:
 | `cobblemon-flan:pokemon_battle` | Controls starting battles in claims | Allowed |
 | `cobblemon-flan:pokemon_sendout` | Controls sending out Pokemon in claims | Allowed |
 | `cobblemon-flan:pokemon_ride` | Controls riding Pokemon in claims | Allowed |
-| `cobblemon-flan:display_case` | Controls interacting with display cases | Allowed |
+| `cobblemon-flan:display_case` | Controls interacting with display cases | Denied |
 | `cobblemon-flan:pokemon_pc` | Controls using the PC in claims | Allowed |
 | `cobblemon-flan:pokemon_heal` | Controls using the healing machine in claims | Allowed |
 | `cobblemon-flan:honey_lure` | Controls placing honey lures (slathered logs) in claims | Allowed |
