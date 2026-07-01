@@ -2,7 +2,7 @@
   "gui_item": {
     "id": "cobblemon:pokedex_red"
   },
-  "default_value": false,
+  "default_value": true,
   "global": false,
   "order": 204,
   "required_mod": "cobblemon"

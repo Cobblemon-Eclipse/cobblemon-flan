@@ -2,7 +2,7 @@
   "gui_item": {
     "id": "cobblemon:ultra_ball"
   },
-  "default_value": false,
+  "default_value": true,
   "global": false,
   "order": 202,
   "required_mod": "cobblemon"

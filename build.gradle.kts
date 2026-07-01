@@ -1,11 +1,11 @@
 plugins {
-    id("com.eclipse.mod") version "1.0.19"
+    id("com.eclipse.mod") version "1.0.24"
 }
 
 eclipseMod {
     modId.set("cobblemon-flan")
     modName.set("Cobblemon Flan Integration")
-    modVersion.set("1.2.0")
+    modVersion.set("1.3.0") // x-release-please-version
     mavenGroup.set("com.eclipse")
 
     useEclipseCore.set(false)
