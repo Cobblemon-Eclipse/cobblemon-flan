@@ -1,0 +1,52 @@
+name: Bug report
+description: Something isn't working right with cobblemon-flan
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! cobblemon-flan gates Cobblemon actions (catching, battling, riding, etc.)
+        through Flan land-claim permissions. Please include enough detail to reproduce it.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. In a claim with pokemon_catch turned off...
+        2. Throw a Poke Ball at a wild Pokemon...
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Minecraft, Fabric Loader, Cobblemon, Flan, and cobblemon-flan
+      placeholder: "MC 1.21.1 / Fabric 0.16.x / Cobblemon 1.7.x / Flan 1.12.x / cobblemon-flan 1.3.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: permission
+    attributes:
+      label: Which claim permission is involved?
+      options:
+        - Not sure
+        - pokemon_spawn
+        - pokemon_catch
+        - pokemon_battle
+        - pokemon_sendout
+        - pokemon_ride
+        - display_case
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server log / crash report
+      description: Paste relevant server logs or a crash-report link. Rendered as code.
+      render: shell
