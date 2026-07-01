@@ -4,6 +4,7 @@
   "package": "com.eclipse.cobblemon.flan.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "FlanPokeBallProjectileMixin",
     "RidingStateHandlerMixin"
   ],
   "injectors": {
