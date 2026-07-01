@@ -21,6 +21,9 @@ class FlanPermissionChecker {
         val POKEMON_SENDOUT = Identifier.of("cobblemon-flan", "pokemon_sendout")
         val POKEMON_RIDE = Identifier.of("cobblemon-flan", "pokemon_ride")
         val DISPLAY_CASE = Identifier.of("cobblemon-flan", "display_case")
+        val POKEMON_PC = Identifier.of("cobblemon-flan", "pokemon_pc")
+        val POKEMON_HEAL = Identifier.of("cobblemon-flan", "pokemon_heal")
+        val HONEY_LURE = Identifier.of("cobblemon-flan", "honey_lure")
     }
 
     /**
@@ -59,5 +62,17 @@ class FlanPermissionChecker {
 
     fun canUseDisplayCase(player: ServerPlayerEntity, pos: BlockPos): Boolean {
         return canInteract(player, pos, DISPLAY_CASE)
+    }
+
+    fun canUsePC(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        return canInteract(player, pos, POKEMON_PC)
+    }
+
+    fun canUseHealingMachine(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        return canInteract(player, pos, POKEMON_HEAL)
+    }
+
+    fun canPlaceHoneyLure(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        return canInteract(player, pos, HONEY_LURE)
     }
 }

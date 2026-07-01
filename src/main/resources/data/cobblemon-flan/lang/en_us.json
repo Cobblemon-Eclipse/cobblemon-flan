@@ -10,5 +10,11 @@
   "flan.permission.cobblemon-flan:pokemon_ride": "Pokemon Ride",
   "flan.permission.cobblemon-flan:pokemon_ride.desc": "Allow riding Pokemon in this claim",
   "flan.permission.cobblemon-flan:display_case": "Display Case",
-  "flan.permission.cobblemon-flan:display_case.desc": "Allow interacting with display cases in this claim"
+  "flan.permission.cobblemon-flan:display_case.desc": "Allow interacting with display cases in this claim",
+  "flan.permission.cobblemon-flan:pokemon_pc": "Pokemon PC",
+  "flan.permission.cobblemon-flan:pokemon_pc.desc": "Allow using the PC in this claim",
+  "flan.permission.cobblemon-flan:pokemon_heal": "Healing Machine",
+  "flan.permission.cobblemon-flan:pokemon_heal.desc": "Allow using Healing Machines in this claim",
+  "flan.permission.cobblemon-flan:honey_lure": "Honey Lure",
+  "flan.permission.cobblemon-flan:honey_lure.desc": "Allow placing honey lures on saccharine logs in this claim"
 }

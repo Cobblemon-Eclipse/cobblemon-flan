@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/compare/cobblemon-flan-v1.3.0...cobblemon-flan-v1.4.0) (2026-07-01)
+
+
+### Features
+
+* add pokemon_pc, pokemon_heal, and honey_lure claim permissions ([#5](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/issues/5)) ([b869705](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/commit/b8697055d992c753ea2a1c7496f2821ee82d0af7))
+
 ## [1.3.0](https://github.com/Cobblemon-Eclipse/cobblemon-flan-dev/compare/cobblemon-flan-v1.2.0...cobblemon-flan-v1.3.0) (2026-07-01)
 
 

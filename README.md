@@ -14,6 +14,9 @@ This mod adds the following Flan permissions for Cobblemon:
 | `cobblemon-flan:pokemon_sendout` | Controls sending out Pokemon in claims | Allowed |
 | `cobblemon-flan:pokemon_ride` | Controls riding Pokemon in claims | Allowed |
 | `cobblemon-flan:display_case` | Controls interacting with display cases | Allowed |
+| `cobblemon-flan:pokemon_pc` | Controls using the PC in claims | Allowed |
+| `cobblemon-flan:pokemon_heal` | Controls using the healing machine in claims | Allowed |
+| `cobblemon-flan:honey_lure` | Controls placing honey lures (slathered logs) in claims | Allowed |
 
 Claim owners can configure these permissions per-claim through Flan's permission GUI.
 
@@ -39,12 +42,15 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
 {
   "protections": {
     "preventWildSpawns": true,
+    "allowHoneyLureSpawns": true,
     "preventCatching": true,
     "preventBattles": true,
     "preventSendOut": true,
     "preventRiding": true,
     "preventDisplayCaseInteraction": true,
-    "ownerBypass": true
+    "preventPCUse": true,
+    "preventHealingMachineUse": true,
+    "preventHoneyLurePlacement": true
   },
   "messages": {
     "prefix": "<red>[Flan] </red>",
@@ -52,7 +58,10 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
     "cannotBattle": "<yellow>You cannot battle Pokemon in this claim!</yellow>",
     "cannotSendOut": "<yellow>You cannot send out Pokemon in this claim!</yellow>",
     "cannotRide": "<yellow>You cannot ride Pokemon in this claim!</yellow>",
-    "cannotUseDisplayCase": "<yellow>You cannot interact with display cases in this claim!</yellow>"
+    "cannotUseDisplayCase": "<yellow>You cannot interact with display cases in this claim!</yellow>",
+    "cannotUsePC": "<yellow>You cannot use the PC in this claim!</yellow>",
+    "cannotUseHealingMachine": "<yellow>You cannot use the Healing Machine in this claim!</yellow>",
+    "cannotPlaceHoneyLure": "<yellow>You cannot place honey lures in this claim!</yellow>"
   }
 }
 ```
@@ -66,8 +75,11 @@ Configuration file is located at `config/cobblemon-flan/config.json`:
 | `preventBattles` | Prevent players from starting battles in claims |
 | `preventSendOut` | Prevent players from sending out their Pokemon in claims |
 | `preventRiding` | Prevent players from riding Pokemon in claims |
+| `allowHoneyLureSpawns` | Let honey-lure (slathered log) spawns through even when `preventWildSpawns` is on |
 | `preventDisplayCaseInteraction` | Prevent players from interacting with display cases (stealing items) |
-| `ownerBypass` | Allow claim owners to bypass all restrictions |
+| `preventPCUse` | Prevent players from using the PC in claims |
+| `preventHealingMachineUse` | Prevent players from using the Healing Machine in claims |
+| `preventHoneyLurePlacement` | Prevent players from placing honey lures (honey bottle on a saccharine log) in claims |
 
 ## How It Works
 
@@ -88,6 +100,9 @@ After installing this mod, you'll see new permission options in Flan's claim GUI
 - **Pokemon Send Out** (egg icon) - Per-player permission for sending out Pokemon
 - **Pokemon Ride** (saddle icon) - Per-player permission for riding
 - **Display Case** (glass icon) - Per-player permission for interacting with display cases
+- **Pokemon PC** (PC icon) - Per-player permission for using the PC
+- **Healing Machine** (healing machine icon) - Per-player permission for using the Healing Machine
+- **Honey Lure** (honey bottle icon) - Per-player permission for placing honey lures
 
 ## Changelog
 

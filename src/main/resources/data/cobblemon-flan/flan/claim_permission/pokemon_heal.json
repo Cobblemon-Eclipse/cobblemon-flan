@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "cobblemon:healing_machine"
+  },
+  "default_value": true,
+  "global": false,
+  "order": 207,
+  "required_mod": "cobblemon"
+}

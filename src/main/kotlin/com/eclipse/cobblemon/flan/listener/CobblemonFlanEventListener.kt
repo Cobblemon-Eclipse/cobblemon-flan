@@ -2,14 +2,20 @@ package com.eclipse.cobblemon.flan.listener
 
 import com.cobblemon.mod.common.CobblemonBlocks
 import com.cobblemon.mod.common.api.events.CobblemonEvents
+import com.cobblemon.mod.common.api.spawning.influence.SaccharineLogSlatheredInfluence
+import com.cobblemon.mod.common.block.SaccharineLogBlock
 import com.eclipse.cobblemon.flan.CobblemonFlan
 import com.eclipse.cobblemon.flan.api.FlanBypass
 import com.eclipse.cobblemon.flan.config.CobblemonFlanConfig
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import org.slf4j.LoggerFactory
 
 /**
@@ -28,7 +34,7 @@ class CobblemonFlanEventListener {
         registerBattleProtection()
         registerSendOutProtection()
         registerRideProtection()
-        registerDisplayCaseProtection()
+        registerBlockInteractionProtection()
 
         logger.info("Cobblemon Flan event listeners registered!")
     }
@@ -38,6 +44,12 @@ class CobblemonFlanEventListener {
             try {
                 val config = CobblemonFlanConfig.config
                 if (!config.protections.preventWildSpawns) return@subscribe
+
+                // Allow honey-lure spawns through even when wild spawns are blocked
+                if (config.protections.allowHoneyLureSpawns &&
+                    event.spawnablePosition.markers.contains(SaccharineLogSlatheredInfluence.SACCHARINE_LOG_SLATHERED_MARKER)) {
+                    return@subscribe
+                }
 
                 val spawnPos = event.spawnablePosition.position
                 val causeEntity = event.spawnablePosition.cause.entity
@@ -83,6 +95,7 @@ class CobblemonFlanEventListener {
 
         logger.debug("Catch protection registered")
     }
+
 
     private fun registerBattleProtection() {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe { event ->
@@ -165,36 +178,77 @@ class CobblemonFlanEventListener {
         logger.debug("Ride protection registered")
     }
 
-    private fun registerDisplayCaseProtection() {
+    private fun registerBlockInteractionProtection() {
         UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
             if (world.isClient) return@register ActionResult.PASS
 
             try {
-                val config = CobblemonFlanConfig.config
-                if (!config.protections.preventDisplayCaseInteraction) return@register ActionResult.PASS
-
                 val serverPlayer = player as? ServerPlayerEntity ?: return@register ActionResult.PASS
                 if (FlanBypass.isBypassed(serverPlayer.uuid)) return@register ActionResult.PASS
                 val pos = hitResult.blockPos
-                val blockState = world.getBlockState(pos)
-
-                // Check if this is a Cobblemon display case
-                if (blockState.block == CobblemonBlocks.DISPLAY_CASE) {
-                    if (!permissionChecker.canUseDisplayCase(serverPlayer, pos)) {
-                        sendMessage(serverPlayer, config.messages.cannotUseDisplayCase)
-                        logger.debug("Blocked display case interaction by ${serverPlayer.name.string} at $pos")
-                        return@register ActionResult.FAIL
-                    }
+                val blocked = when (val block = world.getBlockState(pos).block) {
+                    CobblemonBlocks.DISPLAY_CASE -> blockDisplayCase(serverPlayer, pos)
+                    CobblemonBlocks.PC -> blockPCUse(serverPlayer, pos)
+                    CobblemonBlocks.HEALING_MACHINE -> blockHealingMachine(serverPlayer, pos)
+                    is SaccharineLogBlock -> blockHoneyLure(serverPlayer, pos, hand, hitResult)
+                    else -> false
                 }
+                if (blocked) return@register ActionResult.FAIL
             } catch (e: Exception) {
-                logger.warn("Error in display case protection: ${e.message}")
+                logger.warn("Error in block interaction protection: ${e.message}")
                 return@register ActionResult.FAIL // Fail closed - deny interaction on error
             }
 
             ActionResult.PASS
         }
 
-        logger.debug("Display case protection registered")
+        logger.debug("Block interaction protection registered")
+    }
+
+    // Each returns true if the interaction should be denied (fail closed on the caller's catch).
+    private fun blockDisplayCase(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        val config = CobblemonFlanConfig.config
+        if (config.protections.preventDisplayCaseInteraction && !permissionChecker.canUseDisplayCase(player, pos)) {
+            sendMessage(player, config.messages.cannotUseDisplayCase)
+            logger.debug("Blocked display case interaction by ${player.name.string} at $pos")
+            return true
+        }
+        return false
+    }
+
+    private fun blockPCUse(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        val config = CobblemonFlanConfig.config
+        if (config.protections.preventPCUse && !permissionChecker.canUsePC(player, pos)) {
+            sendMessage(player, config.messages.cannotUsePC)
+            logger.debug("Blocked PC interaction by ${player.name.string} at $pos")
+            return true
+        }
+        return false
+    }
+
+    private fun blockHealingMachine(player: ServerPlayerEntity, pos: BlockPos): Boolean {
+        val config = CobblemonFlanConfig.config
+        if (config.protections.preventHealingMachineUse && !permissionChecker.canUseHealingMachine(player, pos)) {
+            sendMessage(player, config.messages.cannotUseHealingMachine)
+            logger.debug("Blocked Healing Machine interaction by ${player.name.string} at $pos")
+            return true
+        }
+        return false
+    }
+
+    private fun blockHoneyLure(player: ServerPlayerEntity, pos: BlockPos, hand: Hand, hitResult: BlockHitResult): Boolean {
+        val config = CobblemonFlanConfig.config
+        // Only intercept the honey-bottle-on-vertical-side interaction that turns it into a slathered log
+        if (config.protections.preventHoneyLurePlacement &&
+            player.getStackInHand(hand).isOf(Items.HONEY_BOTTLE) &&
+            hitResult.side != Direction.UP &&
+            hitResult.side != Direction.DOWN &&
+            !permissionChecker.canPlaceHoneyLure(player, pos)) {
+            sendMessage(player, config.messages.cannotPlaceHoneyLure)
+            logger.debug("Blocked honey lure placement by ${player.name.string} at $pos")
+            return true
+        }
+        return false
     }
 
     private fun sendMessage(player: ServerPlayerEntity, message: String) {

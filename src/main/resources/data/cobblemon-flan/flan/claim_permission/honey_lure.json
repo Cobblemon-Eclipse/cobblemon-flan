@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "minecraft:honey_bottle"
+  },
+  "default_value": true,
+  "global": false,
+  "order": 208,
+  "required_mod": "cobblemon"
+}

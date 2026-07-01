@@ -1,0 +1,9 @@
+{
+  "gui_item": {
+    "id": "cobblemon:pc"
+  },
+  "default_value": true,
+  "global": false,
+  "order": 206,
+  "required_mod": "cobblemon"
+}
